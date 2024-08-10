@@ -1,0 +1,21 @@
+﻿@page "/upload"
+<h3>UploadAnh</h3>
+
+<InputFile OnChange="FileSelect" accept=".jpg,.jpeg,.tiff"></InputFile>
+<button @onclick="UploadFileApp">Upload</button>
+@code {
+    private IBrowserFile file;
+    private void FileSelect(InputFileChangeEventArgs e)
+    {
+        file = e.File;
+    }
+
+    private async Task UploadFileApp()
+    {
+        var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/anh", file.Name);
+        using(var stream = new FileStream(filePath, FileMode.Create))
+        {
+            await file.OpenReadStream().CopyToAsync(stream);
+        }
+    }
+}

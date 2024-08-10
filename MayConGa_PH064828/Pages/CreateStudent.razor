@@ -1,0 +1,32 @@
+﻿@page "/create"
+@using ThiThuMayConGa.Model;
+@inject Service.IStudentService StdService
+<h3>CreateStudent</h3>
+
+<EditForm Model="Student" OnValidSubmit="SubmitForm">
+    <DataAnnotationsValidator></DataAnnotationsValidator>
+    <ValidationSummary></ValidationSummary>
+    <div>
+        <label>Name: </label>
+        <InputText @bind-Value="Student.Name"></InputText>
+    </div>
+    <div>
+        <label>Age: </label>
+        <InputNumber @bind-Value="Student.Age"></InputNumber>
+    </div>
+    <div>
+        <label>Description: </label>
+        <InputText @bind-Value="Student.Description"></InputText>
+    </div>
+
+    <button type="submit">Create</button>
+</EditForm>
+@code {
+    private Student Student = new Student();
+
+    private async Task SubmitForm()
+    {
+        await StdService.AddStudent(Student);
+
+    }
+}
